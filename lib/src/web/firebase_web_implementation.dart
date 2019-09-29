@@ -97,15 +97,18 @@ class FirebaseImplementationApp extends FirebaseApp {
   FirebaseImplementationApp._(this._app);
   final web_fb.App _app;
   factory FirebaseImplementationApp() {
-    if (web_fb.apps.isEmpty)
-      return FirebaseImplementationApp._(web_fb.initializeApp(
+    if (web_fb.apps.isEmpty) {
+      final app = web_fb.initializeApp(
         apiKey: "AIzaSyDGxVKeNQbDvFpCC3CUlcl-MxzSAkEDnqI",
         authDomain: "textos-do-kalil.firebaseapp.com",
         databaseURL: "https://textos-do-kalil.firebaseio.com",
         projectId: "textos-do-kalil",
         storageBucket: "textos-do-kalil.appspot.com",
         messagingSenderId: "110201445649",
-      ));
+      );
+      app.auth().setPersistence("local");
+      return FirebaseImplementationApp._(app);
+    }
     return FirebaseImplementationApp._(web_fb.app());
   }
   WebAuthInstance auth() => WebAuthInstance._(_app.auth());
@@ -197,8 +200,7 @@ class WebFirebaseStorageUploadTask extends FirebaseStorageUploadTask {
 class WebStorageInstance extends StorageInstance {
   WebStorageInstance._(this._instance);
   final web_fb.Storage _instance;
-  FirebaseStorageReference get ref =>
-      WebFirebaseStorageReference._(_instance.ref());
+  FirebaseStorageReference get ref => WebFirebaseStorageReference._(_instance.ref('/'));
 }
 
 FirebaseStorageTaskEventType convertEventType(web_fb.TaskState t) {
