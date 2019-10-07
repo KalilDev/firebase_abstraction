@@ -15,15 +15,14 @@ class MobileFirestoreTransaction extends FirestoreTransaction {
       _transaction
           .get(_firestore.document(ref.path))
           .then(MobileFirestoreDocumentReference.castToAbstract);
-  Future<Null> update(
+  Future<void> update(
           FirestoreDocumentReference ref, Map<String, dynamic> data) async =>
       _transaction
-          .update(_firestore.document(ref.path), data)
-          .then((_) => null);
-  Future<Null> set(
+          .update(_firestore.document(ref.path), data);
+  Future<void> set(
           FirestoreDocumentReference ref, Map<String, dynamic> data) async =>
       _transaction.set(_firestore.document(ref.path), data);
-  Future<Null> delete(FirestoreDocumentReference ref) async =>
+  Future<void> delete(FirestoreDocumentReference ref) async =>
       _transaction.delete(_firestore.document(ref.path));
 }
 

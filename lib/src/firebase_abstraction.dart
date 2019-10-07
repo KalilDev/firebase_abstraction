@@ -10,17 +10,17 @@ abstract class FirestoreInstance {
 
 abstract class FirestoreTransaction {
   Future<FirestoreDocumentSnapshot> get(FirestoreDocumentReference ref);
-  Future<Null> set(FirestoreDocumentReference ref, Map<String, dynamic> data);
-  Future<Null> update(
+  Future<void> set(FirestoreDocumentReference ref, Map<String, dynamic> data);
+  Future<void> update(
       FirestoreDocumentReference ref, Map<String, dynamic> data);
-  Future<Null> delete(FirestoreDocumentReference ref);
+  Future<void> delete(FirestoreDocumentReference ref);
 }
 
 abstract class FirestoreCollectionReference {
   String get path;
   Stream<FirestoreQuerySnapshot> get snapshots;
   Future<FirestoreQuerySnapshot> get get;
-  Future<Null> add(Map<String, dynamic> data);
+  Future<void> add(Map<String, dynamic> data);
   String get id;
   FirestoreQuery where(String field, QueryOperation op, dynamic value);
   FirestoreDocumentReference doc(String path);
@@ -45,9 +45,9 @@ abstract class FirestoreDocumentReference {
   String get path;
   Stream<FirestoreDocumentSnapshot> get snapshots;
   Future<FirestoreDocumentSnapshot> get get;
-  Future<Null> set(Map<String, dynamic> data);
+  Future<void> set(Map<String, dynamic> data);
   String get id;
-  Future<Null> delete();
+  Future<void> delete();
   FirestoreCollectionReference collection(String path);
 }
 
@@ -124,7 +124,7 @@ abstract class AuthUser {
   String get displayName;
   String get photoURL;
   String get email;
-  Future<Null> updateProfile(AuthUserProfile profile);
+  Future<void> updateProfile(AuthUserProfile profile);
 }
 
 class AuthUserProfile {
