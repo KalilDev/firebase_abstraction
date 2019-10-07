@@ -22,14 +22,18 @@ abstract class FirestoreCollectionReference {
   Future<FirestoreQuerySnapshot> get get;
   Future<Null> add(Map<String, dynamic> data);
   String get id;
-  //FirestoreQuery where();
+  FirestoreQuery where(String field, QueryOperation op, dynamic value);
   FirestoreDocumentReference doc(String path);
+}
+
+enum QueryOperation {
+  equalTo, lessThan, lessThanOrEqualTo, greaterThan, greaterThanOrEqualTo, arrayContains
 }
 
 abstract class FirestoreQuery {
   Stream<FirestoreQuerySnapshot> get snapshots;
   Future<FirestoreQuerySnapshot> get get;
-  //where();
+  FirestoreQuery where(String field, QueryOperation op, dynamic value);
 }
 
 class FirestoreQuerySnapshot {

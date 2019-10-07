@@ -75,10 +75,21 @@ class MobileFirestoreCollectionReference extends FirestoreCollectionReference {
       _ref.getDocuments().then(MobileFirestoreQuery.castToAbstract);
   add(Map<String, dynamic> data) => _ref.add(data);
   String get id => _ref.id;
-  where() => null;
+  FirestoreQuery where(String field, QueryOperation op, dynamic value) {
+    assert(op != null);
+    mobile_fs.Query query;
+    switch (op) {
+      case QueryOperation.equalTo: query = _ref.where(field, isEqualTo: value); break;
+      case QueryOperation.lessThan: query = _ref.where(field, isLessThan: value); break;
+      case QueryOperation.lessThanOrEqualTo: query = _ref.where(field, isLessThanOrEqualTo: value); break;
+      case QueryOperation.greaterThan: query = _ref.where(field, isGreaterThan: value); break;
+      case QueryOperation.greaterThanOrEqualTo: query = _ref.where(field, isGreaterThanOrEqualTo: value); break;
+      case QueryOperation.arrayContains: query = _ref.where(field, arrayContains: value); break;
+    }
+    return MobileFirestoreQuery._(query);
+  }
   doc(String path) => MobileFirestoreDocumentReference._(_ref.document(path));
 }
-
 class MobileFirestoreQuery extends FirestoreQuery {
   MobileFirestoreQuery._(this._query);
   final mobile_fs.Query _query;
@@ -86,6 +97,19 @@ class MobileFirestoreQuery extends FirestoreQuery {
       _query.snapshots().map(castToAbstract);
   Future<FirestoreQuerySnapshot> get get =>
       _query.getDocuments().then(MobileFirestoreQuery.castToAbstract);
+  FirestoreQuery where(String field, QueryOperation op, dynamic value) {
+    assert(op != null);
+    mobile_fs.Query query;
+    switch (op) {
+      case QueryOperation.equalTo: query = _query.where(field, isEqualTo: value); break;
+      case QueryOperation.lessThan: query = _query.where(field, isLessThan: value); break;
+      case QueryOperation.lessThanOrEqualTo: query = _query.where(field, isLessThanOrEqualTo: value); break;
+      case QueryOperation.greaterThan: query = _query.where(field, isGreaterThan: value); break;
+      case QueryOperation.greaterThanOrEqualTo: query = _query.where(field, isGreaterThanOrEqualTo: value); break;
+      case QueryOperation.arrayContains: query = _query.where(field, arrayContains: value); break;
+    }
+    return MobileFirestoreQuery._(query);
+  }
   static FirestoreQuerySnapshot castToAbstract(mobile_fs.QuerySnapshot snap) =>
       FirestoreQuerySnapshot(snap.documents
           .map<FirestoreDocumentSnapshot>(

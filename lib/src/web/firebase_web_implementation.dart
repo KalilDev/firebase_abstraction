@@ -74,9 +74,23 @@ class WebFirestoreCollectionReference extends FirestoreCollectionReference {
       _ref.get().then(WebFirestoreQuery.castToAbstract);
   add(Map<String, dynamic> data) => _ref.add(data);
   String get id => _ref.id;
-  where() => null;
+  FirestoreQuery where(String field, QueryOperation op, dynamic value) =>
+    WebFirestoreQuery._(_ref.where(field, getOpString(op), value));
   doc(String path) => WebFirestoreDocumentReference._(_ref.doc(path));
 }
+    String getOpString(QueryOperation op) {
+    assert(op != null);
+    String opString;
+    switch (op) {
+      case QueryOperation.equalTo: opString = '=='; break;
+      case QueryOperation.lessThan: opString = '<'; break;
+      case QueryOperation.lessThanOrEqualTo: opString = '<='; break;
+      case QueryOperation.greaterThan: opString = '>'; break;
+      case QueryOperation.greaterThanOrEqualTo: opString = '>='; break;
+      case QueryOperation.arrayContains: opString = 'array-contains'; break;
+    }
+    return opString;
+    }
 
 class WebFirestoreQuery extends FirestoreQuery {
   WebFirestoreQuery._(this._query);
@@ -85,6 +99,8 @@ class WebFirestoreQuery extends FirestoreQuery {
       _query.onSnapshot.map(castToAbstract);
   Future<FirestoreQuerySnapshot> get get =>
       _query.get().then(WebFirestoreQuery.castToAbstract);
+  FirestoreQuery where(String field, QueryOperation op, dynamic value) =>
+    WebFirestoreQuery._(_query.where(field, getOpString(op), value));
   static FirestoreQuerySnapshot castToAbstract(web_fs.QuerySnapshot snap) {
     return FirestoreQuerySnapshot(snap.docs
         .map<FirestoreDocumentSnapshot>(
