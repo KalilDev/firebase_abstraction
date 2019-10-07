@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:firebase/firebase.dart' as web_fb;
 import 'package:firebase/firestore.dart' as web_fs;
-import 'package:firebase_abstraction/src/firebase_abstraction.dart';
+import 'package:firebase_abstraction/firebase.dart';
 
 class WebFirestoreTransaction extends FirestoreTransaction {
   WebFirestoreTransaction._(this._transaction, this._firestore);
@@ -109,10 +109,10 @@ class WebFirestoreQuery extends FirestoreQuery {
   }
 }
 
-class FirebaseImplementationApp extends FirebaseApp {
-  FirebaseImplementationApp._(this._app);
+class WebFirebaseApp extends FirebaseApp {
+  WebFirebaseApp._(this._app);
   final web_fb.App _app;
-  factory FirebaseImplementationApp() {
+  factory WebFirebaseApp() {
     if (web_fb.apps.isEmpty) {
       final app = web_fb.initializeApp(
         apiKey: "AIzaSyDGxVKeNQbDvFpCC3CUlcl-MxzSAkEDnqI",
@@ -123,9 +123,9 @@ class FirebaseImplementationApp extends FirebaseApp {
         messagingSenderId: "110201445649",
       );
       app.auth().setPersistence("local");
-      return FirebaseImplementationApp._(app);
+      return WebFirebaseApp._(app);
     }
-    return FirebaseImplementationApp._(web_fb.app());
+    return WebFirebaseApp._(web_fb.app());
   }
   WebAuthInstance auth() => WebAuthInstance._(_app.auth());
   WebFirestoreInstance firestore() => WebFirestoreInstance._(_app.firestore());

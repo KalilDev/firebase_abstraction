@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart' as mobile_auth;
 import 'package:firebase_storage/firebase_storage.dart' as mobile_str;
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:firebase_abstraction/src/firebase_abstraction.dart';
+import 'package:firebase_abstraction/firebase.dart';
+
+FirebaseApp getFirebaseApp() => MobileFirebaseApp();
 
 class MobileFirestoreTransaction extends FirestoreTransaction {
   MobileFirestoreTransaction._(this._transaction, this._firestore);
@@ -116,7 +118,7 @@ class MobileFirestoreQuery extends FirestoreQuery {
           .toList());
 }
 
-class FirebaseImplementationApp extends FirebaseApp {
+class MobileFirebaseApp extends FirebaseApp {
   MobileAuthInstance auth() =>
       MobileAuthInstance._(mobile_auth.FirebaseAuth.instance);
   MobileFirestoreInstance firestore() =>
