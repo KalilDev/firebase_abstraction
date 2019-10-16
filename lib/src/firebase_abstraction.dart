@@ -46,6 +46,7 @@ abstract class FirestoreDocumentReference {
   Stream<FirestoreDocumentSnapshot> get snapshots;
   Future<FirestoreDocumentSnapshot> get get;
   Future<void> set(Map<String, dynamic> data);
+  Future<void> update(Map<String, dynamic> data);
   String get id;
   Future<void> delete();
   FirestoreCollectionReference collection(String path);

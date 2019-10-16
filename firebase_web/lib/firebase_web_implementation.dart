@@ -48,6 +48,7 @@ class WebFirestoreDocumentReference extends FirestoreDocumentReference {
   Future<FirestoreDocumentSnapshot> get get =>
       _ref.get().then(WebFirestoreDocumentReference.castToAbstract);
   Future<Null> set(Map<String, dynamic> data) => _ref.set(data);
+  Future<Null> update(Map<String, dynamic> data) => _ref.update(data: data);
   String get id => _ref.id;
   Future<Null> delete() => _ref.delete();
   collection(String path) =>

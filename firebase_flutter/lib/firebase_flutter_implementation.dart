@@ -51,7 +51,8 @@ class MobileFirestoreDocumentReference extends FirestoreDocumentReference {
       _ref.snapshots().map(MobileFirestoreDocumentReference.castToAbstract);
   Future<FirestoreDocumentSnapshot> get get =>
       _ref.get().then(MobileFirestoreDocumentReference.castToAbstract);
-  set(Map<String, dynamic> data) => _ref.setData(data).then<Null>((_) => null);
+  set(Map<String, dynamic> data) => _ref.setData(data);
+  update(Map<String, dynamic> data) => _ref.updateData(data);
   String get id => _ref.documentID;
   delete() => _ref.delete();
   collection(String path) =>
@@ -192,7 +193,7 @@ class MobileAuthUser extends AuthUser {
       info.photoUrl = profile.photoUrl;
     if (profile?.shouldUpdate('displayName') == true)
       info.displayName = profile.displayName;
-    return _user.updateProfile(info).then<Null>((_) => null);
+    return _user.updateProfile(info);
   }
 }
 
