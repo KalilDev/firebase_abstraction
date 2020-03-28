@@ -146,7 +146,7 @@ class WebAuthInstance extends AuthInstance {
   }
 
   Stream<WebAuthUser> get userStream =>
-      _auth.onAuthStateChanged.map((web_fb.User u) => WebAuthUser._(u));
+      _auth.onIdTokenChanged.map((web_fb.User u) => WebAuthUser._(u));
 
   signInWithGoogleAccount() async {
     try {
